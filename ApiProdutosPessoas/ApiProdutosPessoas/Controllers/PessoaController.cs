@@ -12,9 +12,9 @@ namespace ApiProdutosPessoas.Controllers
     [ApiController]
     public class PessoaController : ControllerBase
     {
-        private readonly InterfaceUsuarioRepositorio _usuarioRepositorio;
+        private readonly InterfacePessoa _usuarioRepositorio;
 
-        public PessoaController(InterfaceUsuarioRepositorio usuarioRepositorio)
+        public PessoaController(InterfacePessoa usuarioRepositorio)
         {
             _usuarioRepositorio = usuarioRepositorio;
         }

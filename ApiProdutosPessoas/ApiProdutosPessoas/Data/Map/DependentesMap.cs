@@ -1,10 +1,6 @@
 ﻿using ApiProdutosPessoas.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApiProdutosPessoas.Data.Map
 {
@@ -12,8 +8,21 @@ namespace ApiProdutosPessoas.Data.Map
     {
         public void Configure(EntityTypeBuilder<DependentesModel> builder)
         {
-            builder.HasKey(x => x.codPessoaPrincipal);
-            builder.Property(x => x.codPessoaDependente);
+            builder.ToTable("Dependentes");
+
+            builder.HasKey(d => d.Id);
+
+
+            builder.HasOne(d => d.PessoaPrincipal)
+                .WithMany(p => p.Dependentes)
+                .HasForeignKey(d => d.codPessoaPrincipal)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.HasOne(d => d.PessoaDependente)
+                .WithMany()
+                .HasForeignKey(d => d.codPessoaDependente)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

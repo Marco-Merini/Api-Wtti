@@ -31,7 +31,11 @@ namespace SistemadeTarefas
             options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             // Injeção de Dependência dos Repositórios
-            services.AddScoped<InterfaceUsuarioRepositorio, PessoaRepositorio>();
+            services.AddScoped<InterfacePessoa, PessoaRepositorio>();
+            services.AddScoped<InterfaceProduto, ProdutoRepositorio>();
+            services.AddScoped<InterfaceDependente, DependenteRepositorio>();
+            //services.AddScoped<InterfaceMarca, MarcaRepositorio>();
+            //services.AddScoped<InterfaceCidade, CidadeRepositorio>();
 
             // Configuração do Swagger
             services.AddSwaggerGen(c =>

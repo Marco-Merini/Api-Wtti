@@ -17,6 +17,6 @@ namespace ApiProdutosPessoas.Models
         public int NumeroEstabelecimento { get; set; }
         public string Bairro { get; set; }
         public string CEP { get; set; }
-        public List<DependentesModel> Dependentes { get; set; }
+        public List<DependentesModel> Dependentes { get; set; } = new List<DependentesModel>();
     }
 }

@@ -4,11 +4,12 @@ using ApiProdutosPessoas.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApiProdutosPessoas.Repositories
 {
-    public class PessoaRepositorio : InterfaceUsuarioRepositorio
+    public class PessoaRepositorio : InterfacePessoa
     {
         private readonly ProdutosPessoasdbContext _dbContext;
 
@@ -32,7 +33,27 @@ namespace ApiProdutosPessoas.Repositories
         //Add
         public async Task<PessoaModel> Adicionar(PessoaModel usuario)
         {
+            // Adiciona a pessoa ao contexto
             await _dbContext.Pessoas.AddAsync(usuario);
+            await _dbContext.SaveChangesAsync();
+
+            foreach (var dependente in usuario.Dependentes)
+            {
+                var dependenteExistente = _dbContext.Dependentes
+                    .FirstOrDefault(d => d.codPessoaPrincipal == dependente.codPessoaPrincipal && d.codPessoaDependente == dependente.codPessoaDependente);
+
+                // Se o dependente já existe, desanexa do contexto
+                if (dependenteExistente != null)
+                {
+                    _dbContext.Entry(dependenteExistente).State = EntityState.Detached;
+                }
+
+                // Adiciona o novo dependente
+                _dbContext.Dependentes.Add(dependente);
+            }
+
+            // Adiciona a pessoa no banco de dados
+            _dbContext.Pessoas.Add(usuario);
             await _dbContext.SaveChangesAsync();
 
             return usuario;

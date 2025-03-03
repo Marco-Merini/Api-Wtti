@@ -1,8 +1,13 @@
+using ApiProdutosPessoas.Data;
+using ApiProdutosPessoas.Repositories;
+using ApiProdutosPessoas.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace SistemadeTarefas
@@ -22,16 +27,16 @@ namespace SistemadeTarefas
             services.AddControllers();
 
             // Configurando o Entity Framework com SQL Server
-            /* OLHAR MAIS TARDE services.AddDbContext<SistemaTarefasDBContext>(options =>*/
+            services.AddDbContext<ProdutosPessoasdbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             // Injeção de Dependência dos Repositórios
-            /* OLHAR MAIS TARDE services.AddScoped<InterfaceUsuarioRepositorio, UsuarioRepositorio>();*/
+            services.AddScoped<InterfaceUsuarioRepositorio, PessoaRepositorio>();
 
             // Configuração do Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SistemadeTarefas", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProdutosPessoas", Version = "v1" });
             });
         }
 
@@ -42,7 +47,7 @@ namespace SistemadeTarefas
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SistemadeTarefas v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProdutosPessoas v1"));
             }
 
             app.UseHttpsRedirection();

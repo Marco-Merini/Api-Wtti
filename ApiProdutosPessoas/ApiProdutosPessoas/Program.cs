@@ -14,7 +14,7 @@ namespace SistemadeTarefas
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>(); // Chama a classe Startup
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

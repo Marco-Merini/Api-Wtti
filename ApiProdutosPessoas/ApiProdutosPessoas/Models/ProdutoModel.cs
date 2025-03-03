@@ -9,7 +9,7 @@ namespace ApiProdutosPessoas.Models
     {
         public int Codigo { get; set; }
         public string Descricao { get; set; }
-        public object Marca { get; set; }
+        public MarcaModel Marca { get; set; }
         public int Estoque { get; set; }
     }
 }

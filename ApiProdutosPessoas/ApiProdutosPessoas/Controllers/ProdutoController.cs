@@ -10,50 +10,50 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace ApiProdutosPessoas.Controllers
 {
-    [Route("api/[controllerProduto]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly InterfaceUsuarioRepositorio _usuarioRepositorio;
+        private readonly InterfaceProduto _produtoRepositorio;
 
-        public ProdutoController(InterfaceUsuarioRepositorio usuarioRepositorio)
+        public ProdutoController(InterfaceProduto usuarioRepositorio)
         {
-            _usuarioRepositorio = usuarioRepositorio;
+            _produtoRepositorio = usuarioRepositorio;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProdutoModel>>> BuscarTodos()
+        public async Task<ActionResult<List<ProdutoModel>>> BuscarTodosProdutos()
         {
-            List<PessoaModel> usuarios = await _usuarioRepositorio.BuscarTodos();
+            List<ProdutoModel> usuarios = await _produtoRepositorio.BuscarTodosProdutos();
             return Ok(usuarios);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PessoaModel>> BuscarID(int id)
+        public async Task<ActionResult<ProdutoModel>> BuscarIDProduto(int id)
         {
-            PessoaModel usuario = await _usuarioRepositorio.BuscarID(id);
+            ProdutoModel usuario = await _produtoRepositorio.BuscarIDProduto(id);
             return Ok(usuario);
         }
 
         [HttpPost]
-        public async Task<ActionResult<PessoaModel>> Registrar([FromBody] PessoaModel usuarioModel)
+        public async Task<ActionResult<ProdutoModel>> Registrar([FromBody] ProdutoModel usuarioModel)
         {
-            PessoaModel usuario = await _usuarioRepositorio.Adicionar(usuarioModel);
+            ProdutoModel usuario = await _produtoRepositorio.AdicionarProduto(usuarioModel);
             return Ok(usuario);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<PessoaModel>> Atualizar([FromBody] PessoaModel usuarioModel, int id)
+        public async Task<ActionResult<PessoaModel>> Atualizar([FromBody] ProdutoModel usuarioModel, int id)
         {
             usuarioModel.Codigo = id;
-            PessoaModel usuario = await _usuarioRepositorio.Atualizar(usuarioModel, id);
+            ProdutoModel usuario = await _produtoRepositorio.AtualizarProduto(usuarioModel, id);
             return Ok(usuario);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<PessoaModel>> Deletar(int id)
         {
-            bool deleted = await _usuarioRepositorio.Deletar(id);
+            bool deleted = await _produtoRepositorio.DeletarProduto(id);
             return Ok(deleted);
         }
     }

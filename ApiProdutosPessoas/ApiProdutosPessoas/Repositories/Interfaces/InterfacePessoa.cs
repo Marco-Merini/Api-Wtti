@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiProdutosPessoas.Repositories.Interfaces
 {
-    public interface InterfaceUsuarioRepositorio
+    public interface InterfacePessoa
     {
         Task<List<PessoaModel>> BuscarTodos();
         Task<PessoaModel> BuscarID(int id);

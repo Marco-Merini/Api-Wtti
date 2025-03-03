@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ApiProdutosPessoas.Controllers
 {
-    public class DependentesController
+    public class DependenteController
     {
     }
 }

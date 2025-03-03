@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiProdutosPessoas.Repositories.Interfaces
+namespace ApiProdutosPessoas.Controllers
 {
-    interface InterfaceUsuario
+    public class MarcaController
     {
     }
 }

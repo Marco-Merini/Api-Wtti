@@ -1,28 +1,26 @@
 ﻿using ApiProdutosPessoas.Models;
 using ApiProdutosPessoas.Repositories.Interfaces;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace ApiProdutosPessoas.Controllers
 {
-    [Route("api/[controllerProduto]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class ProdutoController : ControllerBase
+    public class PessoaController : ControllerBase
     {
         private readonly InterfaceUsuarioRepositorio _usuarioRepositorio;
 
-        public ProdutoController(InterfaceUsuarioRepositorio usuarioRepositorio)
+        public PessoaController(InterfaceUsuarioRepositorio usuarioRepositorio)
         {
             _usuarioRepositorio = usuarioRepositorio;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProdutoModel>>> BuscarTodos()
+        public async Task<ActionResult<List<PessoaModel>>> BuscarTodos()
         {
             List<PessoaModel> usuarios = await _usuarioRepositorio.BuscarTodos();
             return Ok(usuarios);
@@ -43,7 +41,7 @@ namespace ApiProdutosPessoas.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<PessoaModel>> Atualizar([FromBody] PessoaModel usuarioModel, int id)
+        public async Task<ActionResult<PessoaModel>> Update([FromBody] PessoaModel usuarioModel, int id)
         {
             usuarioModel.Codigo = id;
             PessoaModel usuario = await _usuarioRepositorio.Atualizar(usuarioModel, id);

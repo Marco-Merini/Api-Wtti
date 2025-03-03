@@ -14,8 +14,8 @@ namespace ApiProdutosPessoas.Data.Map
         {
             builder.HasKey(x => x.Codigo);
             builder.Property(x => x.Descricao).IsRequired().HasMaxLength(255);
-            builder.Property(x => x.Marca).IsRequired().HasMaxLength(150);
-            builder.Property(x => x.Estoque).IsRequired().HasMaxLength(150);
+            //builder.Property(x => x.Marca).IsRequired().HasMaxLength(150);
+            builder.Property(x => x.Estoque).IsRequired();
         }
     }
 }

@@ -33,7 +33,6 @@ namespace ApiProdutosPessoas.Repositories
         //Add
         public async Task<PessoaModel> Adicionar(PessoaModel usuario)
         {
-            // Adiciona a pessoa ao contexto
             await _dbContext.Pessoas.AddAsync(usuario);
             await _dbContext.SaveChangesAsync();
 

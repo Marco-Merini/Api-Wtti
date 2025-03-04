@@ -30,6 +30,11 @@ namespace SistemadeTarefas
 
             services.AddScoped<InterfacePessoa, PessoaRepositorio>();
             services.AddScoped<InterfaceProduto, ProdutoRepositorio>();
+            services.AddScoped<InterfaceCidade, CidadeRepositorio>();
+            services.AddScoped<InterfaceMarca, MarcaRepositorio>();
+            services.AddScoped<InterfaceDependente, DependenteRepositorio>();
+
+
 
             services.AddSwaggerGen(c =>
             {

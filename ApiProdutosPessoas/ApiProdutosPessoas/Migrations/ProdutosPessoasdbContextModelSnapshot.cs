@@ -40,6 +40,29 @@ namespace ApiProdutosPessoas.Migrations
                     b.ToTable("Cidades");
                 });
 
+            modelBuilder.Entity("ApiProdutosPessoas.Models.DependentesModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("IdDependente")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PessoaModelCodigo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PessoaResponsavelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PessoaModelCodigo");
+
+                    b.ToTable("Dependentes");
+                });
+
             modelBuilder.Entity("ApiProdutosPessoas.Models.MarcaModel", b =>
                 {
                     b.Property<int>("Codigo")
@@ -52,7 +75,7 @@ namespace ApiProdutosPessoas.Migrations
 
                     b.HasKey("Codigo");
 
-                    b.ToTable("MarcaModel");
+                    b.ToTable("Marcas");
                 });
 
             modelBuilder.Entity("ApiProdutosPessoas.Models.PessoaModel", b =>
@@ -125,7 +148,14 @@ namespace ApiProdutosPessoas.Migrations
 
                     b.HasIndex("MarcaCodigo");
 
-                    b.ToTable("ProdutoModel");
+                    b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("ApiProdutosPessoas.Models.DependentesModel", b =>
+                {
+                    b.HasOne("ApiProdutosPessoas.Models.PessoaModel", null)
+                        .WithMany("Dependentes")
+                        .HasForeignKey("PessoaModelCodigo");
                 });
 
             modelBuilder.Entity("ApiProdutosPessoas.Models.PessoaModel", b =>
@@ -146,6 +176,11 @@ namespace ApiProdutosPessoas.Migrations
                         .HasForeignKey("MarcaCodigo");
 
                     b.Navigation("Marca");
+                });
+
+            modelBuilder.Entity("ApiProdutosPessoas.Models.PessoaModel", b =>
+                {
+                    b.Navigation("Dependentes");
                 });
 #pragma warning restore 612, 618
         }

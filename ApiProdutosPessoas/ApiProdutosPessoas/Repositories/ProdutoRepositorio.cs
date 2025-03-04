@@ -56,14 +56,14 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<bool> DeletarProduto(int id)
         {
-            ProdutoModel usuarioId = await BuscarIDProduto(id);
+            ProdutoModel produtoId = await BuscarIDProduto(id);
 
-            if (usuarioId == null)
+            if (produtoId == null)
             {
                 throw new Exception($"Produto para o ID: {id} não foi encontrado no banco de dados.");
             }
 
-            _dbContext.Produtos.Remove(usuarioId);
+            _dbContext.Produtos.Remove(produtoId);
             await _dbContext.SaveChangesAsync();
 
             return true;

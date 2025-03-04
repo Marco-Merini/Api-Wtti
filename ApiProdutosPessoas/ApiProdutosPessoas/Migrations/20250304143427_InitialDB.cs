@@ -22,7 +22,7 @@ namespace ApiProdutosPessoas.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MarcaModel",
+                name: "Marcas",
                 columns: table => new
                 {
                     Codigo = table.Column<int>(type: "int", nullable: false)
@@ -31,7 +31,7 @@ namespace ApiProdutosPessoas.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MarcaModel", x => x.Codigo);
+                    table.PrimaryKey("PK_Marcas", x => x.Codigo);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,7 +61,7 @@ namespace ApiProdutosPessoas.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProdutoModel",
+                name: "Produtos",
                 columns: table => new
                 {
                     Codigo = table.Column<int>(type: "int", nullable: false)
@@ -72,14 +72,40 @@ namespace ApiProdutosPessoas.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProdutoModel", x => x.Codigo);
+                    table.PrimaryKey("PK_Produtos", x => x.Codigo);
                     table.ForeignKey(
-                        name: "FK_ProdutoModel_MarcaModel_MarcaCodigo",
+                        name: "FK_Produtos_Marcas_MarcaCodigo",
                         column: x => x.MarcaCodigo,
-                        principalTable: "MarcaModel",
+                        principalTable: "Marcas",
                         principalColumn: "Codigo",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Dependentes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdDependente = table.Column<int>(type: "int", nullable: false),
+                    PessoaResponsavelId = table.Column<int>(type: "int", nullable: true),
+                    PessoaModelCodigo = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dependentes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Dependentes_Pessoas_PessoaModelCodigo",
+                        column: x => x.PessoaModelCodigo,
+                        principalTable: "Pessoas",
+                        principalColumn: "Codigo",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dependentes_PessoaModelCodigo",
+                table: "Dependentes",
+                column: "PessoaModelCodigo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pessoas_CodigoCidade",
@@ -87,24 +113,27 @@ namespace ApiProdutosPessoas.Migrations
                 column: "CodigoCidade");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProdutoModel_MarcaCodigo",
-                table: "ProdutoModel",
+                name: "IX_Produtos_MarcaCodigo",
+                table: "Produtos",
                 column: "MarcaCodigo");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Dependentes");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
+
+            migrationBuilder.DropTable(
                 name: "Pessoas");
 
             migrationBuilder.DropTable(
-                name: "ProdutoModel");
+                name: "Marcas");
 
             migrationBuilder.DropTable(
                 name: "Cidades");
-
-            migrationBuilder.DropTable(
-                name: "MarcaModel");
         }
     }
 }

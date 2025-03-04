@@ -34,7 +34,7 @@ namespace ApiProdutosPessoas.Data
             modelBuilder.ApplyConfiguration(new ProdutoMap());
             //modelBuilder.ApplyConfiguration(new MarcaMap());
             //modelBuilder.ApplyConfiguration(new CidadeMap());
-            modelBuilder.ApplyConfiguration(new DependentesMap());
+            //modelBuilder.ApplyConfiguration(new DependentesMap());
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -16,45 +16,45 @@ namespace ApiProdutosPessoas.Controllers
     {
         private readonly InterfaceProduto _produtoRepositorio;
 
-        public ProdutoController(InterfaceProduto usuarioRepositorio)
+        public ProdutoController(InterfaceProduto produtoRepositorio)
         {
-            _produtoRepositorio = usuarioRepositorio;
+            _produtoRepositorio = produtoRepositorio;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<ProdutoModel>>> BuscarTodosProdutos()
         {
-            List<ProdutoModel> usuarios = await _produtoRepositorio.BuscarTodosProdutos();
-            return Ok(usuarios);
+            List<ProdutoModel> produto = await _produtoRepositorio.BuscarTodosProdutos();
+            return Ok(produto);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProdutoModel>> BuscarIDProduto(int id)
         {
-            ProdutoModel usuario = await _produtoRepositorio.BuscarIDProduto(id);
-            return Ok(usuario);
+            ProdutoModel produto = await _produtoRepositorio.BuscarIDProduto(id);
+            return Ok(produto);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProdutoModel>> Registrar([FromBody] ProdutoModel usuarioModel)
+        public async Task<ActionResult<ProdutoModel>> AdicionarProduto([FromBody] ProdutoModel produtoModel)
         {
-            ProdutoModel usuario = await _produtoRepositorio.AdicionarProduto(usuarioModel);
-            return Ok(usuario);
+            ProdutoModel produto = await _produtoRepositorio.AdicionarProduto(produtoModel);
+            return Ok(produto);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<PessoaModel>> Atualizar([FromBody] ProdutoModel usuarioModel, int id)
+        public async Task<ActionResult<ProdutoModel>> AtualizarProduto([FromBody] ProdutoModel produtoModel, int id)
         {
-            usuarioModel.Codigo = id;
-            ProdutoModel usuario = await _produtoRepositorio.AtualizarProduto(usuarioModel, id);
-            return Ok(usuario);
+            produtoModel.Codigo = id;
+            ProdutoModel produto = await _produtoRepositorio.AtualizarProduto(produtoModel, id);
+            return Ok(produto);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PessoaModel>> Deletar(int id)
+        public async Task<ActionResult<ProdutoModel>> DeletarProduto(int id)
         {
-            bool deleted = await _produtoRepositorio.DeletarProduto(id);
-            return Ok(deleted);
+            bool deletar = await _produtoRepositorio.DeletarProduto(id);
+            return Ok(deletar);
         }
     }
 }

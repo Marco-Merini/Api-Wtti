@@ -14,7 +14,6 @@ namespace ApiProdutosPessoas.Data.Map
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.IdDependente);
-            builder.Property(x => x.PessoaResponsavelId);
         }
     }
 }

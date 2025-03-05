@@ -66,14 +66,21 @@ namespace ApiProdutosPessoas.Repositories
         //Delete
         public async Task<bool> Deletar(int id)
         {
-            PessoaModel usuarioId = await BuscarID(id);
+            PessoaModel usuarioId = await _dbContext.Pessoas
+                .Include(p => p.Dependentes) // Inclui os dependentes para remover
+                .FirstOrDefaultAsync(p => p.Codigo == id);
 
             if (usuarioId == null)
             {
                 throw new Exception($"Usuário para o ID: {id} não foi encontrado no banco de dados.");
             }
 
+            // Remove os dependentes antes da pessoa
+            _dbContext.Dependentes.RemoveRange(usuarioId.Dependentes);
+
+            // Agora pode remover a pessoa
             _dbContext.Pessoas.Remove(usuarioId);
+
             await _dbContext.SaveChangesAsync();
 
             return true;

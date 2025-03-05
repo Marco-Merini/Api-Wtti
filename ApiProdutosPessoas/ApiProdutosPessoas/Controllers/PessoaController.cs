@@ -34,14 +34,14 @@ namespace ApiProdutosPessoas.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PessoaModel>> Registrar([FromBody] PessoaModel usuarioModel)
+        public async Task<ActionResult<PessoaModel>> Adicionar([FromBody] PessoaModel usuarioModel)
         {
             PessoaModel usuario = await _usuarioRepositorio.Adicionar(usuarioModel);
             return Ok(usuario);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<PessoaModel>> Update([FromBody] PessoaModel usuarioModel, int id)
+        public async Task<ActionResult<PessoaModel>> Atualizar([FromBody] PessoaModel usuarioModel, int id)
         {
             usuarioModel.Codigo = id;
             PessoaModel usuario = await _usuarioRepositorio.Atualizar(usuarioModel, id);

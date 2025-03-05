@@ -30,9 +30,12 @@ namespace ApiProdutosPessoas.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("UF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("codigoIBGE");
@@ -51,9 +54,6 @@ namespace ApiProdutosPessoas.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("PessoaModelCodigo")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PessoaResponsavelId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -129,24 +129,18 @@ namespace ApiProdutosPessoas.Migrations
             modelBuilder.Entity("ApiProdutosPessoas.Models.ProdutoModel", b =>
                 {
                     b.Property<int>("Codigo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(255)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MarcaCodigo")
-                        .HasColumnType("int");
-
                     b.HasKey("Codigo");
-
-                    b.HasIndex("MarcaCodigo");
 
                     b.ToTable("Produtos");
                 });
@@ -173,7 +167,9 @@ namespace ApiProdutosPessoas.Migrations
                 {
                     b.HasOne("ApiProdutosPessoas.Models.MarcaModel", "Marca")
                         .WithMany()
-                        .HasForeignKey("MarcaCodigo");
+                        .HasForeignKey("Codigo")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Marca");
                 });

@@ -12,8 +12,8 @@ namespace ApiProdutosPessoas.Migrations
                 {
                     codigoIBGE = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    UF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CodigoPais = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -64,18 +64,16 @@ namespace ApiProdutosPessoas.Migrations
                 name: "Produtos",
                 columns: table => new
                 {
-                    Codigo = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Codigo = table.Column<int>(type: "int", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    MarcaCodigo = table.Column<int>(type: "int", nullable: true),
                     Estoque = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Produtos", x => x.Codigo);
                     table.ForeignKey(
-                        name: "FK_Produtos_Marcas_MarcaCodigo",
-                        column: x => x.MarcaCodigo,
+                        name: "FK_Produtos_Marcas_Codigo",
+                        column: x => x.Codigo,
                         principalTable: "Marcas",
                         principalColumn: "Codigo",
                         onDelete: ReferentialAction.Restrict);
@@ -88,7 +86,6 @@ namespace ApiProdutosPessoas.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdDependente = table.Column<int>(type: "int", nullable: false),
-                    PessoaResponsavelId = table.Column<int>(type: "int", nullable: true),
                     PessoaModelCodigo = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -111,11 +108,6 @@ namespace ApiProdutosPessoas.Migrations
                 name: "IX_Pessoas_CodigoCidade",
                 table: "Pessoas",
                 column: "CodigoCidade");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Produtos_MarcaCodigo",
-                table: "Produtos",
-                column: "MarcaCodigo");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

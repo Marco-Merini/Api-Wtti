@@ -16,12 +16,10 @@ namespace ApiProdutosPessoas.Data.Map
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Idade).IsRequired();
             builder.Property(x => x.CPF).IsRequired().HasMaxLength(11);
-            //builder.Property(x => x.Cidade);
             builder.Property(x => x.Logradouro).IsRequired().HasMaxLength(255);
             builder.Property(x => x.NumeroEstabelecimento).IsRequired();
             builder.Property(x => x.Bairro).IsRequired().HasMaxLength(150);
             builder.Property(x => x.CEP).IsRequired().HasMaxLength(8);
-            //builder.Property(x => x.Dependentes);
         }
     }
 }

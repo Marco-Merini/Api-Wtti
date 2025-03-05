@@ -49,18 +49,20 @@ namespace ApiProdutosPessoas.Repositories
 
         public async Task<bool> DeletarCidade(int id)
         {
-            var cidade = await _dbContext.Cidades.FirstOrDefaultAsync(x => x.codigoIBGE == id);
+            var cidade = await _dbContext.Cidades.FindAsync(id);
+            if (cidade == null) return false;
 
-            if (cidade == null)
+            var hasPeople = await _dbContext.Pessoas.AnyAsync(p => p.CodigoCidade == id);
+            if (hasPeople)
             {
-                throw new Exception($"Cidade com ID {id} não encontrada.");
+                throw new InvalidOperationException("Não é possível excluir a cidade pois há pessoas associadas a ela.");
             }
 
             _dbContext.Cidades.Remove(cidade);
             await _dbContext.SaveChangesAsync();
-
             return true;
         }
+
 
     }
 }

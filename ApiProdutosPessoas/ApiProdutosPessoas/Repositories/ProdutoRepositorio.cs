@@ -45,7 +45,7 @@ namespace ApiProdutosPessoas.Repositories
                 throw new Exception($"Produto para o ID: {id} não foi encontrado no banco de dados.");
             }
             produtoId.Descricao = produto.Descricao;
-            produtoId.Marca = produto.Marca;
+            produtoId.Codigo = produto.Codigo;
             produtoId.Estoque = produto.Estoque;
 
             _dbContext.Produtos.Update(produtoId);

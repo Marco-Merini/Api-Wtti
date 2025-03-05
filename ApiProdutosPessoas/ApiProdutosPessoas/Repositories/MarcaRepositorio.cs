@@ -18,8 +18,32 @@ namespace ApiProdutosPessoas.Repositories
             _dbContext = produtosPessoasDBContext;
         }
 
+        public async Task<MarcaModel> AdicionarMarca(MarcaModel marca)
+        {
+            var marcaExistente = await _dbContext.Marcas
+                                                 .FirstOrDefaultAsync(m => m.Codigo == marca.Codigo);
+
+            if (marcaExistente != null)
+            {
+                throw new Exception($"Marca com código {marca.Codigo} já existe.");
+            }
+
+            await _dbContext.Marcas.AddAsync(marca);
+            await _dbContext.SaveChangesAsync();
+
+            return marca;
+        }
+
+        public async Task<MarcaModel> BuscarIDMarca(int id)
+        {
+            return await _dbContext.Marcas.FirstOrDefaultAsync(m => m.Codigo == id);
+        }
+
         public async Task<bool> DeletarMarca(int id)
         {
+            var produtos = _dbContext.Produtos.Where(p => p.Codigo == id);
+            _dbContext.Produtos.RemoveRange(produtos);
+
             var marca = await _dbContext.Marcas.FirstOrDefaultAsync(x => x.Codigo == id);
 
             if (marca == null)
